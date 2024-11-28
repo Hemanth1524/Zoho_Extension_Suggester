@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify
+
 import google.generativeai as genai
 
-app = Flask(__name__)
+
 
 # Configure Gemini
 genai.configure(api_key="AIzaSyCcbkTa-vHbMZZ3B0CRdP1lVca2RXqt4Zs")  # Replace with your actual API key
@@ -16,15 +16,12 @@ model = genai.GenerativeModel(
     generation_config=generation_config,
 )
 
-@app.route('/generate', methods=['POST'])
-def generate_text():
-    data = request.get_json()
-    prompt = data.get('prompt')
-    if not prompt:
-        return jsonify({'error': 'Missing prompt'}), 400
 
+
+def generate_text():
+    prompt = "I need to Do the sms automation inside the zoho extension is suitable for that in the zoho marketplace?"
     response = model.generate_content(prompt)
-    return jsonify({'text': response.text})
+    return response.text
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    print(generate_text())
